@@ -7,6 +7,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | Recipe | What it builds | Status |
 |---|---|---|
 | [`what-is-an-agent/`](what-is-an-agent/) | The same customer-support task built as a fixed workflow and as a decision-point agent, with a real captured trace showing the structural difference | ✅ |
+| [`agent-loop-from-scratch/`](agent-loop-from-scratch/) | A real tool-calling loop with the raw Anthropic client (no framework) — a safe calculator and a currency-conversion tool, checked against an independently computed ground truth, plus a no-tools baseline for contrast | ✅ |
 
 More recipes land alongside new pages on the blog.
 
