@@ -2,11 +2,15 @@
 Pluggable LLM providers, shared across every recipe in this cookbook.
 
 Pick a provider with the LLM_PROVIDER env var: "anthropic" | "openai" | "ollama".
-Anthropic and OpenAI need an API key (read from .env, never logged or printed).
-Ollama runs fully locally and needs no key at all -- default here, since it's
-the provider actually verified in this repo (no paid keys were available when
-these recipes were built and run; see each recipe's README for what was
-actually exercised versus what is supported but unexercised).
+Default provider is Anthropic. Credentials are read from a .env file --
+python-dotenv walks up from this file's directory to find the nearest one,
+so a single .env at the cookbook root (agents-cookbook/.env) covers every
+recipe; a recipe can still override with its own local .env.
+
+Model choice is task-scaled, not one-size-fits-all: pass model="claude-haiku-4-5"
+for simple classification/judgment calls and model="claude-sonnet-5" for
+anything needing real reasoning. ANTHROPIC_MODEL in .env is only the
+fallback when a call doesn't specify one -- it defaults to the cheap tier.
 
 This file is duplicated into each recipe folder (not imported across folders)
 so every recipe stays self-contained and pip-installable on its own -- copy
@@ -18,10 +22,10 @@ import os
 # --8<-- [start:provider_dispatch]
 def generate(prompt: str, provider: str | None = None, model: str | None = None) -> str:
     """Route to the configured LLM provider and return its text response."""
-    provider = (provider or os.environ.get("LLM_PROVIDER", "ollama")).lower()
+    provider = (provider or os.environ.get("LLM_PROVIDER", "anthropic")).lower()
 
     if provider == "anthropic":
-        return _generate_anthropic(prompt, model or os.environ.get("ANTHROPIC_MODEL", "claude-opus-5"))
+        return _generate_anthropic(prompt, model or os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5"))
     if provider == "openai":
         # Default model id is unverified -- see .env.example.
         return _generate_openai(prompt, model or os.environ.get("OPENAI_MODEL", "gpt-5.1"))
@@ -38,7 +42,7 @@ def _generate_anthropic(prompt: str, model: str) -> str:
 
     api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
-        raise RuntimeError("ANTHROPIC_API_KEY is not set. Add it to your .env file.")
+        raise RuntimeError("ANTHROPIC_API_KEY is not set. Add it to agents-cookbook/.env.")
 
     client = anthropic.Anthropic(api_key=api_key)
     response = client.messages.create(
@@ -56,7 +60,7 @@ def _generate_openai(prompt: str, model: str) -> str:
 
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        raise RuntimeError("OPENAI_API_KEY is not set. Add it to your .env file.")
+        raise RuntimeError("OPENAI_API_KEY is not set. Add it to agents-cookbook/.env.")
 
     client = OpenAI(api_key=api_key)
     response = client.responses.create(model=model, input=prompt)
@@ -73,9 +77,9 @@ def _generate_ollama(prompt: str, model: str) -> str:
     # Deliberately do NOT pass think=False here: for qwen3 models that is a
     # documented Ollama quirk where reasoning text leaks INTO the `content`
     # field instead of being suppressed (verified directly against this
-    # model/version below, not assumed). Leaving `think` at its default
-    # keeps `content` clean and routes reasoning to a separate
-    # `message["thinking"]` field, which this wrapper discards.
+    # model/version). Leaving `think` at its default keeps `content` clean
+    # and routes reasoning to a separate `message["thinking"]` field, which
+    # this wrapper discards.
     response = client.chat(
         model=model,
         messages=[{"role": "user", "content": prompt}],

@@ -2,14 +2,14 @@
 
 The same customer-support task, built two ways, to make the "decision point" distinction from the concept page concrete instead of definitional. Concept write-up: [What Is an Agent?](https://dhruvmakwana.github.io/agents-deep-dive/what-is-an-agent/).
 
-Needs an LLM. Defaults to a local Ollama model (`qwen3:4b`) — no key, no cost. Anthropic and OpenAI are supported through the same pluggable `llm.py` used across this cookbook but were not exercised for this recipe (no paid API keys were available when it was built and verified — see `.env.example`).
+Needs an LLM. Defaults to Anthropic (see [Configure](#configure) for where the key goes) — OpenAI and a local Ollama model are also supported through the same pluggable `llm.py` used across this cookbook.
 
 ## The two pipelines
 
 - **Workflow** (`workflow_answer`): `classify_intent -> retrieve_faq -> generate_response`. A predefined code path. Whatever category gets classified, the generation step is stuck using that FAQ entry — there's no step where anything can say "this isn't right, try something else."
 - **Agent** (`agent_answer`): the same classify and retrieve, plus a judge step ("does this FAQ actually answer the question?") and, if not, a real decision point — the **model itself** picks the next action from `BROADEN` / `CLARIFY` / `ESCALATE`, not a fixed `if/else` written into the pipeline. Capped at 3 steps.
 
-## What actually happened testing this
+## What actually happened, run against `qwen3:4b` (Ollama)
 
 Test query: a customer reports storage showing full right after deleting files and asks whether it's a sync delay or data loss — a question the 5-entry FAQ genuinely doesn't cover (the closest entry is a tier-size FAQ, not a sync/data-loss FAQ).
 
@@ -32,13 +32,11 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Needs Ollama running locally with the model pulled once: `ollama pull qwen3:4b`.
-
 ## Configure
 
-```bash
-cp .env.example .env
-```
+Paste your key into `agents-cookbook/.env` at the **cookbook root** — every recipe reads from it automatically (copy `.env.example` there once if that file doesn't exist yet: `cp ../.env.example ../.env`). To override just this recipe instead, `cp .env.example .env` here.
+
+To use the Ollama path instead of Anthropic, set `LLM_PROVIDER=ollama` and run `ollama pull qwen3:4b` once.
 
 ## Run
 

@@ -20,9 +20,11 @@ cd agents-cookbook/what-is-an-agent
 # follow that folder's README from here
 ```
 
-## A note on API keys and the default provider
+## A note on API keys
 
-Every recipe reads credentials from a local `.env` file that is git-ignored in every recipe folder — never committed, never logged, never printed by any script here. Unlike the companion RAG cookbook, recipes here default to a **local Ollama model** (no key, no cost) because that's the provider actually verified when these recipes were built. Anthropic and OpenAI are supported through the same pluggable `llm.py` pattern and can be switched on via `LLM_PROVIDER` in `.env`, but check each recipe's own README for which providers were actually exercised versus just supported.
+**Paste your Anthropic key into one file: `agents-cookbook/.env`** (copy `.env.example` at this root to `.env` and fill it in — git-ignored, never committed). Every recipe's `llm.py` reads credentials by walking up from its own folder to the nearest `.env`, so this single file covers every recipe without repeating the key per folder. A recipe can still override with its own local `.env` if it needs different settings.
+
+Anthropic is the default provider (`LLM_PROVIDER=anthropic`), with model choice task-scaled per call — Haiku for simple classification/judgment steps, Sonnet for anything needing real reasoning. OpenAI and a local Ollama model are supported through the same pluggable `llm.py` and can be switched on via `LLM_PROVIDER`, but check each recipe's own README for which providers were actually exercised versus just supported.
 
 ## `_shared/`
 
