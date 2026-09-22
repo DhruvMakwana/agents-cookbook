@@ -8,6 +8,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 |---|---|---|
 | [`what-is-an-agent/`](what-is-an-agent/) | The same customer-support task built as a fixed workflow and as a decision-point agent, with a real captured trace showing the structural difference | ✅ |
 | [`agent-loop-from-scratch/`](agent-loop-from-scratch/) | A real tool-calling loop with the raw Anthropic client (no framework) — a safe calculator and a currency-conversion tool, checked against an independently computed ground truth, plus a no-tools baseline for contrast | ✅ |
+| [`workflow-patterns/`](workflow-patterns/) | Four of Anthropic's named workflow patterns with real runs each — chaining with a gate, parallelization with measured wall-clock speedup, orchestrator-workers with a genuinely input-dependent split, evaluator-optimizer with a deterministic check | ✅ |
 
 More recipes land alongside new pages on the blog.
 
