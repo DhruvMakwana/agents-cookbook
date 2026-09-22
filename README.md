@@ -12,6 +12,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`reasoning-paradigms/`](reasoning-paradigms/) | Reflexion's solve-verify-reflect-retry loop, ReWOO vs. ReAct measured on real call count and token count, LLM Compiler's concurrent dispatch reusing ReWOO's own plan, and Plan-and-Solve vs. zero-shot CoT | ✅ |
 | [`tool-design/`](tool-design/) | The same fictional task-tracker data exposed through endpoint-wrapper, consolidated, and code-execution tool surfaces, measured on real call count and token count, plus terse vs. actionable tool-error messages compared on real recovery quality | ✅ |
 | [`context-engineering/`](context-engineering/) | Minimal real repros of Drew Breunig's four context failures (poisoning, distraction, confusion, clash), each with a real fix applied and a real before/after — including two honest negative results where the failure didn't reproduce | ✅ |
+| [`multi-agent-systems/`](multi-agent-systems/) | Anthropic's and Cognition's opposing multi-agent claims tested directly — a real 3.21x token multiplier for a lead-plus-subagents design vs. single-agent, and a real (if inconclusive) test of Cognition's inter-agent consistency risk | ✅ |
 
 More recipes land alongside new pages on the blog.
 
