@@ -10,6 +10,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`agent-loop-from-scratch/`](agent-loop-from-scratch/) | A real tool-calling loop with the raw Anthropic client (no framework) — a safe calculator and a currency-conversion tool, checked against an independently computed ground truth, plus a no-tools baseline for contrast | ✅ |
 | [`workflow-patterns/`](workflow-patterns/) | Four of Anthropic's named workflow patterns with real runs each — chaining with a gate, parallelization with measured wall-clock speedup, orchestrator-workers with a genuinely input-dependent split, evaluator-optimizer with a deterministic check | ✅ |
 | [`reasoning-paradigms/`](reasoning-paradigms/) | Reflexion's solve-verify-reflect-retry loop, ReWOO vs. ReAct measured on real call count and token count, LLM Compiler's concurrent dispatch reusing ReWOO's own plan, and Plan-and-Solve vs. zero-shot CoT | ✅ |
+| [`tool-design/`](tool-design/) | The same fictional task-tracker data exposed through endpoint-wrapper, consolidated, and code-execution tool surfaces, measured on real call count and token count, plus terse vs. actionable tool-error messages compared on real recovery quality | ✅ |
 
 More recipes land alongside new pages on the blog.
 
