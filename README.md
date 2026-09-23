@@ -22,6 +22,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`mcp-deep-dive/`](mcp-deep-dive/) | Real statelessness and requestState security repros against the official MCP SDK (2026-07-28 spec) — raw HTTP header checks for the removed Mcp-Session-Id, and tamper/request-binding/principal-binding/expiry checks against the SDK's own real AES-256-GCM codec; no API key needed, pure protocol mechanics | ✅ |
 | [`kv-cache-economics/`](kv-cache-economics/) | Real cache write/read token counts and the tools→system→messages invalidation hierarchy measured against the live API, plus tool masking (the real mid-conversation-tool-changes beta's tool_removal block) vs. physically editing the tools array, with real cache-footprint numbers for both | ✅ |
 | [`memory-architectures/`](memory-architectures/) | Real semantic-vs-episodic memory retrieval against Claude's real memory tool (unprompted correct file-splitting and file-reading), plus a real memory-poisoning repro showing a low-stakes injected claim succeeding while a high-stakes one triggered spontaneous skepticism — and a one-instruction source-tagging mitigation closing the gap | ✅ |
+| [`models-for-agents/`](models-for-agents/) | Real Haiku 4.5 vs. Sonnet 5 tool-calling reliability under a deliberately ambiguous request (a clean, honest 100%/100% tie), plus a real routing repro across three dispatch strategies with real token counts and real correctness against classic reasoning-trap queries | ✅ |
 
 More recipes land alongside new pages on the blog.
 
