@@ -18,6 +18,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`durable-execution/`](durable-execution/) | A minimal event-log agent, run as two genuinely separate process invocations — a real deliberate crash mid-tool-call, replay-from-log with zero new model calls for completed steps, and idempotent resume with no duplicated side effect | ✅ |
 | [`training-agents/`](training-agents/) | Real DPO preference-pair construction from real completions, plus exact GRPO/DAPO formulas run on toy reward groups — reproducing DAPO's own documented "gradient-decreasing problem" and its dynamic-sampling fix, and outcome-only vs. process credit assignment | ✅ |
 | [`choosing-a-framework/`](choosing-a-framework/) | The identical tool-calling task solved three real ways on the same model — raw Anthropic client, LangChain/LangGraph `create_agent`, Pydantic AI `Agent` — with real lines-of-code, real call counts, and real answers compared | ✅ |
+| [`tools-at-scale/`](tools-at-scale/) | The same 3-step helpdesk task against a 25-tool library three ways — naive (all tools in context), tool search (pre-filtered to 3), programmatic tool calling (one generated workflow) — with real call counts and real token counts, plus a real retriever bug caught and fixed before any paid calls | ✅ |
 
 More recipes land alongside new pages on the blog.
 
