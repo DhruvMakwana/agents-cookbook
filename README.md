@@ -19,6 +19,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`training-agents/`](training-agents/) | Real DPO preference-pair construction from real completions, plus exact GRPO/DAPO formulas run on toy reward groups — reproducing DAPO's own documented "gradient-decreasing problem" and its dynamic-sampling fix, and outcome-only vs. process credit assignment | ✅ |
 | [`choosing-a-framework/`](choosing-a-framework/) | The identical tool-calling task solved three real ways on the same model — raw Anthropic client, LangChain/LangGraph `create_agent`, Pydantic AI `Agent` — with real lines-of-code, real call counts, and real answers compared | ✅ |
 | [`tools-at-scale/`](tools-at-scale/) | The same 3-step helpdesk task against a 25-tool library three ways — naive (all tools in context), tool search (pre-filtered to 3), programmatic tool calling (one generated workflow) — with real call counts and real token counts, plus a real retriever bug caught and fixed before any paid calls | ✅ |
+| [`mcp-deep-dive/`](mcp-deep-dive/) | Real statelessness and requestState security repros against the official MCP SDK (2026-07-28 spec) — raw HTTP header checks for the removed Mcp-Session-Id, and tamper/request-binding/principal-binding/expiry checks against the SDK's own real AES-256-GCM codec; no API key needed, pure protocol mechanics | ✅ |
 
 More recipes land alongside new pages on the blog.
 
