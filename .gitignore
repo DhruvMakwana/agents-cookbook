@@ -4,3 +4,5 @@ __pycache__/
 .env
 *.egg-info/
 .DS_Store
+durable-execution/durable_agent_log.jsonl
+durable-execution/ledgers/
