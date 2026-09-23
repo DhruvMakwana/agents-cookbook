@@ -14,6 +14,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`context-engineering/`](context-engineering/) | Minimal real repros of Drew Breunig's four context failures (poisoning, distraction, confusion, clash), each with a real fix applied and a real before/after — including two honest negative results where the failure didn't reproduce | ✅ |
 | [`multi-agent-systems/`](multi-agent-systems/) | Anthropic's and Cognition's opposing multi-agent claims tested directly — a real 3.21x token multiplier for a lead-plus-subagents design vs. single-agent, and a real (if inconclusive) test of Cognition's inter-agent consistency risk | ✅ |
 | [`evaluating-agents/`](evaluating-agents/) | Outcome vs. trajectory grading, pass@k vs. pass^k measured on 5 real trials, and a capability-motivated prompt change that silently broke a regression suite's own grader — a real, clean regression, caught | ✅ |
+| [`agent-security/`](agent-security/) | The lethal trifecta + Rule of Two, and tool poisoning (a supply-chain attack on tool descriptions) — real, safe, fully local repros with no real network calls; the tool-poisoning attack succeeded cleanly, and a static sanitizer stopped it | ✅ |
 
 More recipes land alongside new pages on the blog.
 
