@@ -33,6 +33,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`sandboxes-permissions/`](sandboxes-permissions/) | A real, two-layer test of credential proxying — a deterministic mechanism check showing proxying blocks theft but not misuse, plus a live Sonnet 5 trial where the model's own judgment declined both attacks in both conditions | ✅ |
 | [`cost-latency/`](cost-latency/) | A real, measured quadratic-vs-windowed transcript growth repro (28.3% real token reduction) matching the documented N(N+1)/2 cost trap, plus a real Haiku/Sonnet routing test — Haiku matched Sonnet's accuracy at ~44% of real cost, but its self-reported confidence never once flagged its own mistake | ✅ |
 | [`rl-search-tool-agents/`](rl-search-tool-agents/) | A real repro of ToolRL's reward-design claim — binary "answer matching" reward scored a close call and a completely wrong tool call identically (0.0 both), while a fine-grained, decomposed reward correctly told them apart (0.89 vs. 0.22) on the same real completions | ✅ |
+| [`mcp-tool-ecosystem/`](mcp-tool-ecosystem/) | A real repro of registry-driven MCP server discovery against the live official MCP registry — natural-language search queries reliably returned zero results while brand-name queries worked, and even Microsoft's own popular playwright-mcp turned out not to be listed at all | ✅ |
 
 More recipes land alongside new pages on the blog.
 
