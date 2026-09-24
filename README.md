@@ -30,6 +30,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`benchmark-atlas/`](benchmark-atlas/) | A real, minimal tau-bench-style repro — a stated policy, a plausible-sounding request to violate it, graded by real action state across 5 independent trials to compute pass@1 vs. pass^k, tau-bench's own real reliability metric | ✅ |
 | [`observability-debugging/`](observability-debugging/) | A real, spec-shaped OpenTelemetry GenAI trace of an agent producing a confidently wrong answer with a clean "success" status — and an independent, trace-only diagnostic pass that finds the real root cause (a mislabeled tool bug) without re-running anything | ✅ |
 | [`guardrails-human-in-the-loop/`](guardrails-human-in-the-loop/) | A real 3-way comparison of guardrail architectures on the identical task — flat-autonomous let a $250 refund through unreviewed, flat-gated stalled the agent before it even reached the risky step, risk-tiered caught exactly the risky action while letting safe work proceed | ✅ |
+| [`sandboxes-permissions/`](sandboxes-permissions/) | A real, two-layer test of credential proxying — a deterministic mechanism check showing proxying blocks theft but not misuse, plus a live Sonnet 5 trial where the model's own judgment declined both attacks in both conditions | ✅ |
 
 More recipes land alongside new pages on the blog.
 
