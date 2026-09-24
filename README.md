@@ -39,6 +39,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`computer-use-browser-agents/`](computer-use-browser-agents/) | A real, safe repro of the CometJacking-class "summarize this webpage" injection mechanism — a fictional page with a hidden data-harvesting pretext, tested raw vs. tagged; Sonnet 5 resisted in both conditions, a real honest negative reached after removing an unrealistic self-announcing tell from the injection | ✅ |
 | [`personal-always-on-agents/`](personal-always-on-agents/) | A real repro of the ClawHavoc skill-marketplace attack's architecture — a deterministic mechanism check shows unscoped skill tool access freely reaching financial data and email while a scoped allow-list blocks both calls before execution, plus a live-agent trial (an honest negative on this run) | ✅ |
 | [`identity-governance-compliance/`](identity-governance-compliance/) | A real repro of agent-identity disclosure — an agent told to just "act as the user" sent a fully anonymous approval email, while an agent given a distinct identity and scoped delegation explicitly named itself and its authorized scope in the same real sent email | ✅ |
+| [`data-environments/`](data-environments/) | A real, complete SWE-smith-style task-synthesis-and-verification loop — Claude introduced a genuine boundary bug into working code (verified by real pytest: 4 passed, 1 failed), then fixed it given only the real failing test output (verified: 5 passed) | ✅ |
 
 More recipes land alongside new pages on the blog.
 
