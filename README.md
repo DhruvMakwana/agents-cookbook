@@ -31,6 +31,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`observability-debugging/`](observability-debugging/) | A real, spec-shaped OpenTelemetry GenAI trace of an agent producing a confidently wrong answer with a clean "success" status — and an independent, trace-only diagnostic pass that finds the real root cause (a mislabeled tool bug) without re-running anything | ✅ |
 | [`guardrails-human-in-the-loop/`](guardrails-human-in-the-loop/) | A real 3-way comparison of guardrail architectures on the identical task — flat-autonomous let a $250 refund through unreviewed, flat-gated stalled the agent before it even reached the risky step, risk-tiered caught exactly the risky action while letting safe work proceed | ✅ |
 | [`sandboxes-permissions/`](sandboxes-permissions/) | A real, two-layer test of credential proxying — a deterministic mechanism check showing proxying blocks theft but not misuse, plus a live Sonnet 5 trial where the model's own judgment declined both attacks in both conditions | ✅ |
+| [`cost-latency/`](cost-latency/) | A real, measured quadratic-vs-windowed transcript growth repro (28.3% real token reduction) matching the documented N(N+1)/2 cost trap, plus a real Haiku/Sonnet routing test — Haiku matched Sonnet's accuracy at ~44% of real cost, but its self-reported confidence never once flagged its own mistake | ✅ |
 
 More recipes land alongside new pages on the blog.
 
