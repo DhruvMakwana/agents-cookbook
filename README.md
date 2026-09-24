@@ -28,6 +28,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`coding-agents-mechanisms/`](coding-agents-mechanisms/) | Real repros of SWE-agent's ACI principles (linting guardrail, review loop) against Sonnet 5 — four honest ties across two independently redesigned task variants each, contrasted against SWE-agent's own real 2024 ablation (18.0%→10.3% without linting), a genuine dated data point on model reliability | ✅ |
 | [`coding-agent-config/`](coding-agent-config/) | Real CLAUDE.md-style project-instructions compliance (0%→100% on two real conventions), and a real hook-vs-no-hook repro isolating exactly what a structural PreToolUse-style hook protects when no prompted rule exists at all (0%→100% survival of an explicitly-requested deletion) | ✅ |
 | [`benchmark-atlas/`](benchmark-atlas/) | A real, minimal tau-bench-style repro — a stated policy, a plausible-sounding request to violate it, graded by real action state across 5 independent trials to compute pass@1 vs. pass^k, tau-bench's own real reliability metric | ✅ |
+| [`observability-debugging/`](observability-debugging/) | A real, spec-shaped OpenTelemetry GenAI trace of an agent producing a confidently wrong answer with a clean "success" status — and an independent, trace-only diagnostic pass that finds the real root cause (a mislabeled tool bug) without re-running anything | ✅ |
 
 More recipes land alongside new pages on the blog.
 
