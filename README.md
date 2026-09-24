@@ -35,6 +35,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`rl-search-tool-agents/`](rl-search-tool-agents/) | A real repro of ToolRL's reward-design claim — binary "answer matching" reward scored a close call and a completely wrong tool call identically (0.0 both), while a fine-grained, decomposed reward correctly told them apart (0.89 vs. 0.22) on the same real completions | ✅ |
 | [`mcp-tool-ecosystem/`](mcp-tool-ecosystem/) | A real repro of registry-driven MCP server discovery against the live official MCP registry — natural-language search queries reliably returned zero results while brand-name queries worked, and even Microsoft's own popular playwright-mcp turned out not to be listed at all | ✅ |
 | [`skills-a2a-protocols/`](skills-a2a-protocols/) | A real repro of Agent Skills' progressive disclosure claim — loading three skills' full instructions upfront cost 4,975 real tokens on a task needing only one, vs. 3,069 (a real 38.3% reduction) when only metadata loaded upfront and the relevant skill's body loaded on demand | ✅ |
+| [`deep-research-agents/`](deep-research-agents/) | A real repro of Anthropic's documented subagent "division of labor" failure — identical, unscoped instructions to 3 subagents produced 60% redundant document retrieval and left 2/6 documents uncovered; explicit per-subagent objectives and boundaries cut redundancy to 14.3% and covered the full corpus | ✅ |
 
 More recipes land alongside new pages on the blog.
 
