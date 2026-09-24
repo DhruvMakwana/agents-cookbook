@@ -27,6 +27,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`harness-engineering/`](harness-engineering/) | Real multi-session continuation via a shared progress file (session 2 re-derives lost work and correctly finishes a checklist session 1 was cut off on), plus a self-verification repro against a deliberately ambiguous tool result — including a real stop-reason bug caught and fixed before trusting any result | ✅ |
 | [`coding-agents-mechanisms/`](coding-agents-mechanisms/) | Real repros of SWE-agent's ACI principles (linting guardrail, review loop) against Sonnet 5 — four honest ties across two independently redesigned task variants each, contrasted against SWE-agent's own real 2024 ablation (18.0%→10.3% without linting), a genuine dated data point on model reliability | ✅ |
 | [`coding-agent-config/`](coding-agent-config/) | Real CLAUDE.md-style project-instructions compliance (0%→100% on two real conventions), and a real hook-vs-no-hook repro isolating exactly what a structural PreToolUse-style hook protects when no prompted rule exists at all (0%→100% survival of an explicitly-requested deletion) | ✅ |
+| [`benchmark-atlas/`](benchmark-atlas/) | A real, minimal tau-bench-style repro — a stated policy, a plausible-sounding request to violate it, graded by real action state across 5 independent trials to compute pass@1 vs. pass^k, tau-bench's own real reliability metric | ✅ |
 
 More recipes land alongside new pages on the blog.
 
