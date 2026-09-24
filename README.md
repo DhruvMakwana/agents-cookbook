@@ -34,6 +34,7 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`cost-latency/`](cost-latency/) | A real, measured quadratic-vs-windowed transcript growth repro (28.3% real token reduction) matching the documented N(N+1)/2 cost trap, plus a real Haiku/Sonnet routing test — Haiku matched Sonnet's accuracy at ~44% of real cost, but its self-reported confidence never once flagged its own mistake | ✅ |
 | [`rl-search-tool-agents/`](rl-search-tool-agents/) | A real repro of ToolRL's reward-design claim — binary "answer matching" reward scored a close call and a completely wrong tool call identically (0.0 both), while a fine-grained, decomposed reward correctly told them apart (0.89 vs. 0.22) on the same real completions | ✅ |
 | [`mcp-tool-ecosystem/`](mcp-tool-ecosystem/) | A real repro of registry-driven MCP server discovery against the live official MCP registry — natural-language search queries reliably returned zero results while brand-name queries worked, and even Microsoft's own popular playwright-mcp turned out not to be listed at all | ✅ |
+| [`skills-a2a-protocols/`](skills-a2a-protocols/) | A real repro of Agent Skills' progressive disclosure claim — loading three skills' full instructions upfront cost 4,975 real tokens on a task needing only one, vs. 3,069 (a real 38.3% reduction) when only metadata loaded upfront and the relevant skill's body loaded on demand | ✅ |
 
 More recipes land alongside new pages on the blog.
 
