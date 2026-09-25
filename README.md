@@ -42,6 +42,14 @@ Runnable, from-scratch implementations of the techniques covered in [Agents, Dee
 | [`data-environments/`](data-environments/) | A real, complete SWE-smith-style task-synthesis-and-verification loop — Claude introduced a genuine boundary bug into working code (verified by real pytest: 4 passed, 1 failed), then fixed it given only the real failing test output (verified: 5 passed) | ✅ |
 | [`self-improving-agents/`](self-improving-agents/) | A real repro of the Darwin Godel Machine's own reward-hacking lesson — does self-reported confidence match real, independently verified correctness? Twice tested (canonical + genuinely tricky tasks), Sonnet 5's self-assessment was honestly well-calibrated both times | ✅ |
 
+## Tutorials & Capstones
+
+Bigger, end-to-end builds that combine several techniques into one real, production-shaped project, rather than isolating one variable per recipe.
+
+| Tutorial | What it builds | Status |
+|---|---|---|
+| [`production-support-agent/`](production-support-agent/) | A real support agent combining tool design, Claude's real memory tool, and risk-tiered guardrails — tested against 6 realistic scenarios (including an embedded prompt injection) under ungated vs. tiered conditions, both scoring a clean 6/6 | ✅ |
+
 More recipes land alongside new pages on the blog.
 
 ## Using a recipe
