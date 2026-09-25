@@ -1,6 +1,7 @@
 anthropic==1.7.0
-python-dotenv==1.0.1
+python-dotenv==1.2.2
 langchain==1.4.2
 langgraph==1.2.11
 langchain-anthropic==1.7.2
 pydantic-ai-slim[anthropic]==2.46.0
+crewai==1.15.22

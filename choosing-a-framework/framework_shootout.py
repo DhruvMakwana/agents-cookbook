@@ -1,10 +1,12 @@
 """
-The identical tiny tool-calling task, solved three ways, all on the same
+The identical tiny tool-calling task, solved four ways, all on the same
 Claude model: the raw Anthropic client (own the loop), LangChain/LangGraph's
-create_agent, and Pydantic AI's Agent. Real lines of code counted from the
-actual solving logic (imports and the shared tool implementation excluded,
-since those are identical across all three), real answers checked against
-an independently computed ground truth.
+create_agent, Pydantic AI's Agent, and CrewAI's Agent (direct kickoff, no
+Task/Crew wrapper -- the same "just run an agent" comparison point as the
+other three). Real lines of code counted from the actual solving logic
+(imports and the shared tool implementation excluded, since those are
+identical across all four), real answers checked against an independently
+computed ground truth.
 
 Run: python framework_shootout.py
 """
@@ -94,6 +96,21 @@ def run_pydantic_ai() -> dict:
     return {"answer": result.output, "calls": calls}
 
 
+# ------------------------------------------------------- 4. CrewAI (direct Agent.kickoff, no Task/Crew)
+
+def run_crewai() -> dict:
+    from crewai import LLM, Agent
+    from crewai.tools import tool as crewai_tool
+
+    calculate_tool = crewai_tool("calculate")(calculate)
+    llm = LLM(model=f"anthropic/{HAIKU}", max_tokens=300)
+    agent = Agent(role="Calculator", goal="Answer the question accurately using the calculate tool.",
+                  backstory="A precise assistant that always uses tools for arithmetic.", tools=[calculate_tool], llm=llm, verbose=False)
+    result = agent.kickoff(QUESTION)
+    calls = result.usage_metrics.get("successful_requests") if result.usage_metrics else None
+    return {"answer": result.raw, "calls": calls}
+
+
 def main() -> None:
     print("Ground truth:", GROUND_TRUTH)
     print()
@@ -105,6 +122,9 @@ def main() -> None:
 
     print(); print("=" * 70); print("3. PYDANTIC AI"); print("=" * 70)
     print(run_pydantic_ai())
+
+    print(); print("=" * 70); print("4. CREWAI (direct Agent.kickoff)"); print("=" * 70)
+    print(run_crewai())
 
 
 if __name__ == "__main__":

@@ -78,3 +78,18 @@ def run_pydantic_ai(model_id: str) -> dict:
     calls = len(result.all_messages()) // 2  # request/response pairs
     return {"answer": result.output, "calls": calls}
 # --8<-- [end:pydantic_ai]
+
+
+# --8<-- [start:crewai]
+def run_crewai(model_id: str) -> dict:
+    from crewai import LLM, Agent
+    from crewai.tools import tool as crewai_tool
+
+    calculate_tool = crewai_tool("calculate")(calculate)
+    llm = LLM(model=f"anthropic/{model_id}", max_tokens=300)
+    agent = Agent(role="Calculator", goal="Answer the question accurately using the calculate tool.",
+                  backstory="A precise assistant that always uses tools for arithmetic.", tools=[calculate_tool], llm=llm, verbose=False)
+    result = agent.kickoff(QUESTION)  # direct Agent.kickoff -- no Task/Crew wrapper needed
+    calls = result.usage_metrics.get("successful_requests") if result.usage_metrics else None
+    return {"answer": result.raw, "calls": calls}
+# --8<-- [end:crewai]
