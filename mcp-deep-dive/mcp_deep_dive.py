@@ -24,12 +24,15 @@ import hashlib
 import json
 import logging
 import socket
+import sys
 import threading
 import time
+from pathlib import Path
 
 import httpx2
 import uvicorn
 from mcp import Client
+from mcp.client.stdio import StdioServerParameters
 from mcp.server.mcpserver import MCPServer
 from mcp.server.request_state import InvalidRequestState, RequestStateSecurity
 
@@ -52,6 +55,16 @@ def _build_demo_server() -> MCPServer:
     def add(a: int, b: int) -> int:
         """Add two numbers."""
         return a + b
+
+    @server.tool()
+    def multiply(a: int, b: int) -> int:
+        """Multiply two numbers."""
+        return a * b
+
+    @server.tool()
+    def greet(name: str, formal: bool = False) -> str:
+        """Greet someone by name."""
+        return f"Good day, {name}." if formal else f"Hey {name}!"
 
     return server
 
@@ -91,6 +104,38 @@ async def basic_usage_demo() -> dict:
                 "tools": [{"name": t.name, "description": t.description} for t in tools.tools],
                 "add(2, 3)": call_result.structured_content,
             }
+
+
+# ------------------------------------------------------- Demo: multiple tools and their real schemas
+
+async def multi_tool_schema_demo() -> dict:
+    with _RunningServer(stateless_http=True) as running:
+        async with Client(running.url) as client:
+            tools = await client.list_tools()
+            schemas = [{"name": t.name, "description": t.description, "inputSchema": t.input_schema} for t in tools.tools]
+            add_result = await client.call_tool("add", {"a": 2, "b": 3})
+            greet_result = await client.call_tool("greet", {"name": "Dhruv", "formal": True})
+            return {
+                "tool_schemas": schemas,
+                "add(2, 3)": add_result.structured_content,
+                'greet(name="Dhruv", formal=True)': greet_result.structured_content,
+            }
+
+
+# ------------------------------------------------------- Demo: the same server, reached over stdio instead of HTTP
+
+async def stdio_demo() -> dict:
+    server_script = Path(__file__).parent / "stdio_server.py"
+    params = StdioServerParameters(command=sys.executable, args=[str(server_script)])
+    async with Client(params) as client:
+        tools = await client.list_tools()
+        add_result = await client.call_tool("add", {"a": 4, "b": 5})
+        greet_result = await client.call_tool("greet", {"name": "Dhruv"})
+        return {
+            "tools": [t.name for t in tools.tools],
+            "add(4, 5)": add_result.structured_content,
+            'greet(name="Dhruv")': greet_result.structured_content,
+        }
 
 
 # ------------------------------------------------------- Demo 1: statelessness in practice
@@ -239,6 +284,18 @@ def main() -> None:
     print("DEMO 0: basic usage -- build a server, connect a client, call a tool")
     print("=" * 70)
     print(json.dumps(asyncio.run(basic_usage_demo()), indent=2))
+
+    print()
+    print("=" * 70)
+    print("DEMO 0b: multiple tools and their real schemas")
+    print("=" * 70)
+    print(json.dumps(asyncio.run(multi_tool_schema_demo()), indent=2))
+
+    print()
+    print("=" * 70)
+    print("DEMO 0c: the same server, reached over stdio instead of HTTP")
+    print("=" * 70)
+    print(json.dumps(asyncio.run(stdio_demo()), indent=2))
 
     print()
     print("=" * 70)

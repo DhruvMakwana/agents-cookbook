@@ -8,12 +8,15 @@ import base64
 import hashlib
 import json
 import socket
+import sys
 import threading
 import time
+from pathlib import Path
 
 import httpx2
 import uvicorn
 from mcp import Client
+from mcp.client.stdio import StdioServerParameters
 from mcp.server.mcpserver import MCPServer
 from mcp.server.request_state import InvalidRequestState, RequestStateSecurity
 
@@ -25,6 +28,16 @@ def build_demo_server() -> MCPServer:
     def add(a: int, b: int) -> int:
         """Add two numbers."""
         return a + b
+
+    @server.tool()
+    def multiply(a: int, b: int) -> int:
+        """Multiply two numbers."""
+        return a * b
+
+    @server.tool()
+    def greet(name: str, formal: bool = False) -> str:
+        """Greet someone by name."""
+        return f"Good day, {name}." if formal else f"Hey {name}!"
 
     return server
 # --8<-- [end:build-server]
@@ -70,6 +83,35 @@ async def basic_usage_demo(server: MCPServer) -> dict:
                 "add(2, 3)": call_result.structured_content,
             }
 # --8<-- [end:basic-usage]
+
+# --8<-- [start:multi-tool-schema]
+async def multi_tool_schema_demo(server: MCPServer) -> dict:
+    with RunningServer(server, stateless_http=True) as running:
+        async with Client(running.url) as client:
+            tools = await client.list_tools()
+            schemas = [{"name": t.name, "description": t.description, "inputSchema": t.input_schema} for t in tools.tools]
+            add_result = await client.call_tool("add", {"a": 2, "b": 3})
+            greet_result = await client.call_tool("greet", {"name": "Dhruv", "formal": True})
+            return {
+                "tool_schemas": schemas,
+                "add(2, 3)": add_result.structured_content,
+                'greet(name="Dhruv", formal=True)': greet_result.structured_content,
+            }
+# --8<-- [end:multi-tool-schema]
+
+# --8<-- [start:stdio-client]
+async def stdio_demo(server_script: Path) -> dict:
+    params = StdioServerParameters(command=sys.executable, args=[str(server_script)])
+    async with Client(params) as client:
+        tools = await client.list_tools()
+        add_result = await client.call_tool("add", {"a": 4, "b": 5})
+        greet_result = await client.call_tool("greet", {"name": "Dhruv"})
+        return {
+            "tools": [t.name for t in tools.tools],
+            "add(4, 5)": add_result.structured_content,
+            'greet(name="Dhruv")': greet_result.structured_content,
+        }
+# --8<-- [end:stdio-client]
 
 # --8<-- [start:statelessness-check]
 async def raw_tools_list(client: httpx2.AsyncClient, url: str, request_id: int) -> httpx2.Response:
