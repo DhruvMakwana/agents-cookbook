@@ -80,6 +80,19 @@ class _RunningServer:
         self._thread.join(timeout=5)
 
 
+# ------------------------------------------------------- Demo 0: basic usage -- build a server, connect a client, call a tool
+
+async def basic_usage_demo() -> dict:
+    with _RunningServer(stateless_http=True) as running:
+        async with Client(running.url) as client:
+            tools = await client.list_tools()
+            call_result = await client.call_tool("add", {"a": 2, "b": 3})
+            return {
+                "tools": [{"name": t.name, "description": t.description} for t in tools.tools],
+                "add(2, 3)": call_result.structured_content,
+            }
+
+
 # ------------------------------------------------------- Demo 1: statelessness in practice
 
 async def _raw_tools_list(client: httpx2.AsyncClient, url: str, request_id: int) -> httpx2.Response:
@@ -222,6 +235,12 @@ def request_state_security_demo() -> dict:
 
 
 def main() -> None:
+    print("=" * 70)
+    print("DEMO 0: basic usage -- build a server, connect a client, call a tool")
+    print("=" * 70)
+    print(json.dumps(asyncio.run(basic_usage_demo()), indent=2))
+
+    print()
     print("=" * 70)
     print("DEMO 1: statelessness in practice (mcp==2.2.0, Streamable HTTP)")
     print("=" * 70)

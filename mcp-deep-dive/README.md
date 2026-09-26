@@ -1,15 +1,18 @@
 # MCP Deep Dive
 
-Two real repros against the official MCP Python SDK (`mcp==2.2.0`, which targets the 2026-07-28 spec revision): statelessness in practice, and the `requestState` security envelope that replaces protocol-level sessions for multi-round-trip flows. Concept write-up: [MCP Deep Dive](https://dhruvmakwana.github.io/agents-deep-dive/mcp-deep-dive/).
+A basic-usage demo (build a real MCP server, connect a real client, call a tool) plus two real repros against the official MCP Python SDK (`mcp==2.2.0`, targeting the current 2026-07-28 spec): statelessness in practice, and the `requestState` security envelope MCP uses today for multi-round-trip flows. Concept write-up: [MCP Deep Dive](https://dhruvmakwana.github.io/agents-deep-dive/mcp-deep-dive/).
 
 No Anthropic API key needed -- this recipe is pure protocol mechanics against the real SDK, not model calls.
 
-## The two repros
+## The demo and the two repros
 
-- **Statelessness in practice** (`statelessness_demo`): a real Streamable HTTP MCP server, run twice -- once in the SDK's default mode, once with `stateless_http=True` -- with raw HTTP requests inspected directly for the `Mcp-Session-Id` header the 2026-07-28 spec says is removed.
+- **Basic usage** (`basic_usage_demo`): the minimal real path -- define a tool with `@server.tool()`, run the server, connect with the SDK's own `Client`, list tools, call one, get a real result back.
+- **Statelessness in practice** (`statelessness_demo`): a real Streamable HTTP MCP server, run twice -- once in the SDK's default mode, once with `stateless_http=True` -- with raw HTTP requests inspected directly for the `Mcp-Session-Id` header the current spec says a stateless server doesn't need.
 - **`requestState` security** (`request_state_security_demo`): the SDK's own real `AESGCMRequestStateCodec` (from `mcp.server.request_state`), exercised through a claims envelope modeled on the real `RequestStateBoundary._seal`/`_unseal` logic (read directly from the installed SDK's source) -- tamper detection, request-binding rejection, principal-binding rejection (the mitigation for "state handle hijacking"), and expiry.
 
 ## What actually happened, run against mcp==2.2.0
+
+**Basic usage, first**: a server with one tool (`add`) started, a real `Client` connected, `list_tools()` returned `[{"name": "add", "description": "Add two numbers."}]`, and `call_tool("add", {"a": 2, "b": 3})` returned `{"result": 5}` -- the whole round trip, no cryptography or protocol edge cases involved.
 
 **A real, surprising finding**: despite `mcp==2.2.0` explicitly targeting the 2026-07-28 spec (SEP-2575: "Remove protocol-level sessions and the `Mcp-Session-Id` header from the Streamable HTTP transport"), the SDK's **default** `streamable_http_app()` configuration still requires and returns `Mcp-Session-Id`. A raw request without one is rejected outright:
 

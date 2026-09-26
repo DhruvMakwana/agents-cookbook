@@ -59,6 +59,18 @@ class RunningServer:
         self._thread.join(timeout=5)
 # --8<-- [end:running-server]
 
+# --8<-- [start:basic-usage]
+async def basic_usage_demo(server: MCPServer) -> dict:
+    with RunningServer(server, stateless_http=True) as running:
+        async with Client(running.url) as client:
+            tools = await client.list_tools()
+            call_result = await client.call_tool("add", {"a": 2, "b": 3})
+            return {
+                "tools": [{"name": t.name, "description": t.description} for t in tools.tools],
+                "add(2, 3)": call_result.structured_content,
+            }
+# --8<-- [end:basic-usage]
+
 # --8<-- [start:statelessness-check]
 async def raw_tools_list(client: httpx2.AsyncClient, url: str, request_id: int) -> httpx2.Response:
     return await client.post(
